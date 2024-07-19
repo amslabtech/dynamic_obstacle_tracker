@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="output" default="log" doc="screen or log"/>
+
+    <!-- Params -->
+    <arg name="global_frame" default="map"/>
+    <arg name="min_dist_th" default="1.0"/>
+
+    <!-- Nodes -->
+    <node pkg="dynamic_obstacle_tracker" type="dynamic_obstacle_tracker" name="dynamic_obstacle_tracker" output="$(arg output)">
+        <param name="global_frame" value="$(arg global_frame)"/>
+        <param name="min_dist_th" value="$(arg min_dist_th)"/>
+    </node>
+</launch>
