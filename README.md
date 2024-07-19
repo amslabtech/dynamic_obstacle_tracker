@@ -1,5 +1,9 @@
 # dynamic_obstacle_tracker
 
+[![ci](https://github.com/amslabtech/dynamic_obstacle_tracker/workflows/ci/badge.svg)](https://github.com/amslabtech/dynamic_obstacle_tracker/actions)
+![issue_opened](https://img.shields.io/github/issues/amslabtech/dynamic_obstacle_tracker.svg)
+![issue_closed](https://img.shields.io/github/issues-closed/amslabtech/dynamic_obstacle_tracker.svg)
+
 ROS package for tracking dynamic obstacles
 
 ![Dynamic Obstacle Tracker](images/dynamic_obstacle_tracker.gif)
