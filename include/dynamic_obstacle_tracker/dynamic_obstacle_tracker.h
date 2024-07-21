@@ -28,10 +28,10 @@
 #include <visualization_msgs/MarkerArray.h>
 
 /**
- * @struct Params
+ * @struct Param
  * @brief Parameters
  */
-struct Params
+struct Param
 {
   std::string global_frame;
   float min_dist_th;
@@ -85,7 +85,7 @@ private:
   visualization_msgs::Marker
   create_marker_msg(const int id, const double scale, const std_msgs::ColorRGBA color, const nav_msgs::Path &path);
 
-  Params params_;
+  Param param_;
   std::vector<nav_msgs::Path> paths_;
 
   ros::NodeHandle nh_;
