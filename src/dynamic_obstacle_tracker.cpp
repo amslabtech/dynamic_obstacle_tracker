@@ -12,8 +12,8 @@
 
 DynamicObstacleTracker::DynamicObstacleTracker(void) : private_nh_("~"), tf_listener_(tf_buffer_)
 {
-  private_nh_.param<std::string>("global_frame", params_.global_frame, std::string("map"));
-  private_nh_.param<float>("min_dist_th", params_.min_dist_th, 1.0);
+  private_nh_.param<std::string>("global_frame", param_.global_frame, std::string("map"));
+  private_nh_.param<float>("min_dist_th", param_.min_dist_th, 1.0);
 
   poses_pub_ = nh_.advertise<geometry_msgs::PoseArray>("/dynamic_obstacle/poses", 1);
   paths_pub_ = nh_.advertise<visualization_msgs::MarkerArray>("/dynamic_obstacle/trajectories", 1);
@@ -28,7 +28,7 @@ void DynamicObstacleTracker::cloud_callback(const sensor_msgs::PointCloud2ConstP
   {
     try
     {
-      transform_stamped = tf_buffer_.lookupTransform(params_.global_frame, cloud_msg->header.frame_id, ros::Time(0));
+      transform_stamped = tf_buffer_.lookupTransform(param_.global_frame, cloud_msg->header.frame_id, ros::Time(0));
       break;
     }
     catch (tf2::TransformException &ex)
@@ -40,7 +40,7 @@ void DynamicObstacleTracker::cloud_callback(const sensor_msgs::PointCloud2ConstP
   const Eigen::Matrix4f transform = tf2::transformToEigen(transform_stamped.transform).matrix().cast<float>();
   sensor_msgs::PointCloud2 cloud_transformed;
   pcl_ros::transformPointCloud(transform, *cloud_msg, cloud_transformed);
-  cloud_transformed.header.frame_id = params_.global_frame;
+  cloud_transformed.header.frame_id = param_.global_frame;
 
   // clustering and tracking
   pcl::PointCloud<pcl::PointXYZ>::Ptr pcl_cloud =
@@ -133,14 +133,14 @@ void DynamicObstacleTracker::track(geometry_msgs::PoseArray poses)
         }
       }
 
-      if (min_dist < params_.min_dist_th && index_check_array[min_idx] == 0)
+      if (min_dist < param_.min_dist_th && index_check_array[min_idx] == 0)
       {
         geometry_msgs::PoseStamped pose;
         pose.pose = poses.poses[i];
         paths_[min_idx].poses.push_back(pose);
         index_check_array[min_idx] = 1;
       }
-      else if (min_dist >= params_.min_dist_th)
+      else if (min_dist >= param_.min_dist_th)
       {
         new_index.push_back(i);
       }
